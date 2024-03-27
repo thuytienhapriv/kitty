@@ -24,43 +24,45 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // update my variables for debugging / checking
         myVelocity = rb.velocity;
         myGravityScale = rb.gravityScale;
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Debug.Log("jump");
-            rb.AddForce(Vector2.up * jumpingMultiplier, ForceMode2D.Impulse);
-        }
+        if (Input.GetKeyDown(KeyCode.W)) { PlayerJump(); }
+        if (Input.GetKey(KeyCode.A)) { PlayerMove(Vector2.left); }
+        if ( Input.GetKey(KeyCode.D)) { PlayerMove(Vector2.right); }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(Vector2.left * speedMultiplier, ForceMode2D.Impulse);
-
-            //rb.velocity = new Vector2(-1,0) * speedMultiplier;
-        }
-
-        if ( Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(Vector2.right * speedMultiplier, ForceMode2D.Impulse);
-
-            //rb.velocity = new Vector2(1, 0) * speedMultiplier;
-        }
-
+        // control horizonal speed
         if (rb.velocity.x < -maxHorizontalSpeed ) 
         { 
             rb.velocity = new Vector3 (-maxHorizontalSpeed, rb.velocity.y);
-        } else if (rb.velocity.x > maxHorizontalSpeed)
+        } 
+        else if (rb.velocity.x > maxHorizontalSpeed)
         {
             rb.velocity = new Vector3(maxHorizontalSpeed, rb.velocity.y);
         }
 
+        // control jump curves
         if (rb.velocity.y > 0)
         {
             rb.gravityScale = gravityScale;
-        } else
+        } 
+        else
         {
             rb.gravityScale = fallGravityScale;
         }
+    }
+
+    private void PlayerJump()
+    {
+        // check if on ground
+        if (rb.velocity.y != 0 ) { return; }
+
+        rb.AddForce(Vector2.up * jumpingMultiplier, ForceMode2D.Impulse);
+    }
+
+    private void PlayerMove(Vector2 direction)
+    {
+        rb.AddForce(direction * speedMultiplier, ForceMode2D.Impulse);
     }
 }
