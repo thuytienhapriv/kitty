@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravityScale; // 3
     [SerializeField] float fallGravityScale; // 3.5
     [SerializeField] float climbingSpeed;
-    
+    //[SerializeField] GameObject[] platforms;
+
     [Header("Check Values", order = 0 )]
     public Vector2 myVelocity;
     public float myGravityScale;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isClimbing;
     public bool isHolding;
     public bool isJumping;
+    public bool isGrounded;
     public bool isTouchingClimbable;
     public float climbDirection;
     private float onLadderX;
@@ -64,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
         GravityController();
 
+        IsGrounded();
         MoveAndJump(); // on ground and platforms
         Climb(); // when touching ladders
     }
@@ -71,8 +74,9 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerJump()
     {
         // check if on ground
-        if (rb.velocity.y != 0 ) { Debug.Log("not on ground"); return; } // will have to change
-        isJumping = true;
+        if (isGrounded == false ) { Debug.Log("not on ground"); return; } // will have to change
+        isGrounded = false;
+        //isJumping = true;
         rb.AddForce(Vector2.up * jumpingMultiplier, ForceMode2D.Impulse);
     }
 
@@ -83,12 +87,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveAndJump()
     {
-        isJumping = false;
+        //isJumping = false;
         states = playerStates.defaultState;
 
-        if (Input.GetKey(KeyCode.Space)) { PlayerJump(); }
+        if (Input.GetKeyDown(KeyCode.Space)) { PlayerJump(); }
         if (Input.GetKey(KeyCode.A)) { PlayerMove(Vector2.left); }
         if (Input.GetKey(KeyCode.D)) { PlayerMove(Vector2.right); }
+    }
+
+    public void IsGrounded()
+    {
+        foreach (var plat in GameObject.FindGameObjectsWithTag("GroundAndPlatforms"))
+        {
+            bool grounded = Physics2D.IsTouching(col, plat.GetComponent<Collider2D>());
+            if (isGrounded == false && grounded == true)
+            {
+                //AudioManager.instance.Play("Landing");
+            }
+            
+            isGrounded = grounded;
+            if (grounded == true)
+            {
+                break;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
