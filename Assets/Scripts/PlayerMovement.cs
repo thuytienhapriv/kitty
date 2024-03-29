@@ -21,14 +21,13 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(-6,0,0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         // update my variables for debugging / checking
         myVelocity = rb.velocity;
         myGravityScale = rb.gravityScale;
 
-        if (Input.GetKeyDown(KeyCode.W)) { PlayerJump(); }
+        if (Input.GetKey(KeyCode.W)) { PlayerJump(); }
         if (Input.GetKey(KeyCode.A)) { PlayerMove(Vector2.left); }
         if ( Input.GetKey(KeyCode.D)) { PlayerMove(Vector2.right); }
 
