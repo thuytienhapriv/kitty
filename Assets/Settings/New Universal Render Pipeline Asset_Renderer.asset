@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
   m_Name: night
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
@@ -20,6 +20,29 @@ MonoBehaviour:
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
+--- !u!114 &-2395667464831112868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db42b3ef8588ca849bc6155bfd78edc4, type: 3}
+  m_Name: DayNiightRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    showInSceneView: 1
+    _event: 300
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 1
+    overrideMaterial: {fileID: 0}
+    overrideMaterialPass: 0
+    colorTargetDestinationID: 
+    blitMaterial: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,7 +60,9 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: -8221496439771571416}
-  m_RendererFeatureMap: 28db46218c60e78d
+  - {fileID: 7141789303337393149}
+  - {fileID: -2395667464831112868}
+  m_RendererFeatureMap: 28db46218c60e78dfd1b1c5688bb1c635ce9c72e22e1c0de
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -76,3 +101,26 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &7141789303337393149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247bc24f088899f49b7ade55a92aa1e6, type: 3}
+  m_Name: DayNightRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  settings:
+    showInSceneView: 1
+    _event: 300
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 1
+    overrideMaterial: {fileID: 0}
+    overrideMaterialPass: 0
+    colorTargetDestinationID: 
+    blitMaterial: {fileID: 0}
