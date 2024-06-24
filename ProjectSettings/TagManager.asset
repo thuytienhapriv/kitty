@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Ladder
   - GroundAndPlatforms
+  - MovableObject
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Platforms
   - Water
   - UI
   - 

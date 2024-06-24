@@ -1,16 +1,10 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement2 : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private Collider2D col;
-/*
-    public enum MovementStates { onGround, jumping, climbing }
-    public MovementStates state;*/
-
     [SerializeField] float jumpingMultiplier; // 15
     [SerializeField] float speedMultiplier; // 2
     [SerializeField] float maxHorizontalSpeed; // 5
@@ -31,41 +25,37 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public bool isTouchingClimbable;
     public float climbDirection;
-    public bool grounded;
     private float onLadderX;
 
     public enum playerStates
     {
-        walking,
-        jumping,
-        climbing,
+        defaultState,
+        climb,
         holdingItem
     }
     public playerStates states;
+    public CharacterController controller;
 
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        col = gameObject.GetComponent<Collider2D>();
         isClimbing = false;
         isTouchingClimbable = false;
         isHolding = false;
-        states = playerStates.walking;
+        states = playerStates.defaultState;
     }
 
     void Update()
     {
         // update my variables for debugging / checking
-        myVelocity = rb.velocity;
-        myGravityScale = rb.gravityScale;
+        myVelocity = controller.velocity;
         currentState = states.ToString();
 
         // control horizonal speed
-        if (rb.velocity.x < -maxHorizontalSpeed ) 
-        { 
-            rb.velocity = new Vector3 (-maxHorizontalSpeed, rb.velocity.y);
+        if (controller.velocity.x < -maxHorizontalSpeed ) 
+        {
+            controller.velocity = new Vector3 (-maxHorizontalSpeed, rb.velocity.y);
         } 
-        else if (rb.velocity.x > maxHorizontalSpeed)
+        else if (controller.velocity.x > maxHorizontalSpeed)
         {
             rb.velocity = new Vector3(maxHorizontalSpeed, rb.velocity.y);
         }
@@ -75,19 +65,12 @@ public class PlayerMovement : MonoBehaviour
         IsGrounded();
         MoveAndJump(); // on ground and platforms
         Climb(); // when touching ladders
-
-        if (isGrounded) { states = playerStates.walking; } else
-        {
-            states = playerStates.jumping;
-        }
     }
 
     private void PlayerJump()
     {
         // check if on ground
         if (isGrounded == false ) { Debug.Log("not on ground"); return; } // will have to change
-
-        states = playerStates.jumping;
         isGrounded = false;
         //isJumping = true;
         rb.AddForce(Vector2.up * jumpingMultiplier, ForceMode2D.Impulse);
@@ -101,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     private void MoveAndJump()
     {
         //isJumping = false;
-        states = playerStates.walking;
+        states = playerStates.defaultState;
 
         if (Input.GetKeyDown(KeyCode.Space)) { PlayerJump(); }
         if (Input.GetKey(KeyCode.A)) { PlayerMove(Vector2.left); }
@@ -110,17 +93,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void IsGrounded()
     {
-        states = playerStates.walking;
-        Physics2D.SyncTransforms();
-
-        //Debug.Log(GameObject.FindGameObjectsWithTag("GroundAndPlatforms"));
-
+        states = playerStates.defaultState;
         foreach (var plat in GameObject.FindGameObjectsWithTag("GroundAndPlatforms"))
         {
-            grounded = Physics2D.IsTouching(col, plat.GetComponent<Collider2D>());
-            //Debug.Log(grounded);
-            //Debug.Log(plat.name + " " + grounded);
-
+            bool grounded = Physics2D.IsTouching(col, plat.GetComponent<Collider2D>());
             if (isGrounded == false && grounded == true)
             {
                 //AudioManager.instance.Play("Landing");
@@ -156,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = fallGravityScale;
 
         // controls jump curves
-        if (states == playerStates.jumping)
+        if (states == playerStates.defaultState)
         {
             if (rb.velocity.y > 0)
             {
@@ -169,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         } 
 
-        if (states == playerStates.climbing)
+        if (states == playerStates.climb)
         {
             rb.gravityScale = 0f;
         }
@@ -196,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             //onLadderX 
 
             //col.isTrigger = true;
-            states = playerStates.climbing;
+            states = playerStates.climb;
 
             if (rb.velocity.y == 0)
             {
@@ -212,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    /*public void StateManager()
+    *//*public void StateManager()
     {
         switch (states)
         {
@@ -225,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
             case playerStates.holdingItem:
                 break;
         }
-    }*/
+    }*//*
 
 }
+*/
