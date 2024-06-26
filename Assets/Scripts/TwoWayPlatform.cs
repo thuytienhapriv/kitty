@@ -6,12 +6,11 @@ public class TwoWayPlatform : MonoBehaviour
 {
     public bool isOnPlatform;
     public bool isGoingDown;
-    public GameObject kitty;
-    public bool stopTime;
+    private float rotOffset;
 
     void Update()
     {
-        //Time.timeScale = 0.5f;
+        // probably later should change to new input system instead of relying on Input Keycode
         if (Input.GetKeyDown(KeyCode.S))
         {
             isGoingDown = true;
@@ -20,53 +19,51 @@ public class TwoWayPlatform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (stopTime == true)
-        {
-            Time.timeScale = 0f;
-        } else
-        {
-            Time.timeScale = 0.25f;
-        }
-
         Physics2D.SyncTransforms();
+        rotOffset = gameObject.GetComponent<PlatformEffector2D>().rotationalOffset;
 
-        if (isGoingDown == true && isOnPlatform == true)
+        if (isGoingDown && isOnPlatform)
         {
-            gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 180;
-            // Debug.Log("can fall through");
+            if (rotOffset != 180)
+            {
+                gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 180;
+                return;
+
+            }
         }
-        else
+
+        if (isOnPlatform && isGoingDown == false)
         {
-            gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 0;
+            if (rotOffset != 0)
+            {
+                gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 0;
+                return;
+            }
         }
+
+        //Debug.DrawRay(kitty.transform.position, Vector3.right, Color.blue, 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
-            Debug.Log("is on");
+            //Debug.Log("is on");
             isOnPlatform = true;
 
-            foreach (ContactPoint2D contact in collision.contacts)
+            /*foreach (ContactPoint2D contact in collision.contacts)
             {
-                // Visualize the contact point
                 Debug.DrawRay(contact.point, contact.normal, Color.red, 1);
-            }
-
-            //stopTime = true;
-
+            }*/
         }
     }
 
-
-    // it goes sideways NOt because of col exit
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player") == true)
         {
-            Debug.Log("is off");
+            //Debug.Log("is off");
             isOnPlatform = false;
             isGoingDown = false;
         }
