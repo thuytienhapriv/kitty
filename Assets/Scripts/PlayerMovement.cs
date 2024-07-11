@@ -206,7 +206,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 //AudioManager.instance.Stop("Climbing");
             }
-
             
             rb.velocity = new Vector2(rb.velocity.x * 0.5f, climbDirection * climbingSpeed);
         }

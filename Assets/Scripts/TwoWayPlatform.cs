@@ -22,16 +22,18 @@ public class TwoWayPlatform : MonoBehaviour
         Physics2D.SyncTransforms();
         rotOffset = gameObject.GetComponent<PlatformEffector2D>().rotationalOffset;
 
+        
+
         if (isGoingDown && isOnPlatform)
         {
             if (rotOffset != 180)
             {
                 gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 180;
                 return;
-
             }
         }
 
+        
         if (isOnPlatform && isGoingDown == false)
         {
             if (rotOffset != 0)
@@ -66,6 +68,8 @@ public class TwoWayPlatform : MonoBehaviour
             //Debug.Log("is off");
             isOnPlatform = false;
             isGoingDown = false;
+            gameObject.GetComponent<PlatformEffector2D>().rotationalOffset = 0;
+
         }
     }
 }

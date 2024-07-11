@@ -177,7 +177,7 @@ PlatformEffector2D:
   m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
-  m_SideArc: 1
+  m_SideArc: 0
 --- !u!61 &125364829
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -289,8 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOnPlatform: 0
   isGoingDown: 0
-  kitty: {fileID: 881828009}
-  stopTime: 0
 --- !u!50 &125364832
 Rigidbody2D:
   serializedVersion: 4
@@ -513,7 +511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &335434939
 Transform:
   m_ObjectHideFlags: 0
@@ -1272,7 +1270,7 @@ Transform:
   m_GameObject: {fileID: 881828009}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.13, y: -1.95, z: 0}
+  m_LocalPosition: {x: -0.97, y: -1.95, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1295,7 +1293,7 @@ MonoBehaviour:
   maxHorizontalSpeed: 3
   gravityScale: 3
   fallGravityScale: 3.5
-  climbingSpeed: 2
+  climbingSpeed: 2.5
   myVelocity: {x: 0, y: 0}
   myGravityScale: 0
   currentState: 
@@ -1817,8 +1815,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOnPlatform: 0
   isGoingDown: 0
-  kitty: {fileID: 881828009}
-  stopTime: 0
 --- !u!1 &1755801998
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,7 +1835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1755801999
 Transform:
   m_ObjectHideFlags: 0
